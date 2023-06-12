@@ -6,15 +6,16 @@
     <%- include("../../shared/includes/header") %>
     <main>
         <h1>Login</h1>
+        <%- include("../../shared/includes/error-header", { inputData: inputData, errorTitle: "Credentials" }) %>
         <form action="/login" method="POST">
             <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
             <p>
                 <label for="email">E-Mail</label>
-                <input id="email" type="email" name="email" required/>
+                <input id="email" type="email" name="email" value="<%= inputData.email %>" required/>
             </p>
             <p>
                 <label for="passwod">Password</label>
-                <input id="password" type="password" name="password" minlength="6" required >
+                <input id="password" type="password" name="password" minlength="6" value="<%= inputData.password %>" required >
             </p>
             <button class="btn">Login</button>
             <p id="switch-form"><a href="/signup">Create a new user</a></p>
