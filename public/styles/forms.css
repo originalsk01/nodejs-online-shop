@@ -16,5 +16,21 @@ textarea {
   border-radius: var(--border-radius-small);
   border: none;
   width: 90%;
-    
+}
+
+#image-upload-control {
+  display: flex;
+  align-items: center;
+}
+
+#image-upload-control input {
+  max-width: 15rem;
+}
+
+#image-upload-control img {
+  display: none;
+  width: 10rem;
+  height: 6rem;
+  object-fit: cover;
+  border-radius: var(--border-radius-small);
 }
