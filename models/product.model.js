@@ -23,14 +23,13 @@ class Product {
       error.code = 404;
       throw error;
     }
-
     const product = await db
       .getDatabase()
       .collection("products")
       .findOne({ _id: prodId });
 
     if (!product) {
-      const error = new Error("Could not find product with provided id");
+      const error = new Error("Could not find product with provided id.");
       error.code = 404;
       throw error;
     }
@@ -39,14 +38,26 @@ class Product {
   }
 
   static async findAll() {
+    const products = await db.getDatabase().collection("products").find().toArray();
+
+    return products.map(function (productDocument) {
+      return new Product(productDocument);
+    });
+  }
+
+  static async findMultiple(ids) {
+    const productIds = ids.map(function (id) {
+      return new mongodb.ObjectId(id);
+    });
+
     const products = await db
       .getDatabase()
       .collection("products")
-      .find()
+      .find({ _id: { $in: productIds } })
       .toArray();
 
-    return products.map((product) => {
-      return new Product(product);
+    return products.map(function (productDocument) {
+      return new Product(productDocument);
     });
   }
 
@@ -78,10 +89,7 @@ class Product {
         }
       );
     } else {
-      const result = await db
-        .getDatabase()
-        .collection("products")
-        .insertOne(productData);
+      await db.getDatabase().collection("products").insertOne(productData);
     }
   }
 
@@ -92,10 +100,7 @@ class Product {
 
   remove() {
     const productId = new mongodb.ObjectId(this.id);
-    return db
-      .getDatabase()
-      .collection("products")
-      .deleteOne({ _id: productId });
+    return db.getDatabase().collection("products").deleteOne({ _id: productId });
   }
 }
 
