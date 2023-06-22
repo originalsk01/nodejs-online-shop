@@ -2,7 +2,7 @@
   <div class="cart-item-info">
     <h2><%= item.product.title %></h2>
     <p>
-      R<%= item.totalPrice.toFixed(2) %>
+      R<span class="cart-item-price"><%= item.totalPrice.toFixed(2) %></span>
       <span class="cart-product-price"
         >(R<%= item.product.price.toFixed(2) %>)</span
       >
